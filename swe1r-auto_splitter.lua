@@ -46,17 +46,17 @@ process("SWEP1RCR.EXE")
 
 local sets = {
 --____________________________________________________________________________
---------------------------- AUTOSPLITTER SETTINGS-----------------------------
+-------------------------- AUTO SPLITTER SETTINGS ----------------------------
 --____________________________________________________________________________
--- Choose Run Format -->| None | Any%-Am/Semi Circuit | 100% |  NewGame+ |
-   preset = 1, --    -->| [0]  |         [1]          | [2]  |    [3]    |
---______________________|______|______________________|______|___________|____
-----------------------------------------------------------|  FORMAT = SETS
+-- Choose Run Catagory-->| None | Any%-Am/Semi Circuit | 100% |  NewGame+ |
+   preset = 1, --     -->| [0]  |         [1]          | [2]  |    [3]    |
+--_______________________|______|______________________|______|___________|___
+----------------------------------------------------------|  PRESET = SETS
 -- Timing Method -   In race GT - RT No Loads - Real Time | [1,2,3] = [1](LRT)
    timeMethod = 1, -- [0](IGT)  -   [1](LRT)  - [2+](RTA) |      
 ----------------------------------------------------------|-------------------
 -- Requires 1st place, or if [false] requires 4th place,  |     [2] = [true]
-   req1st = false, --  and 3rd on SMR/BB/BEC.             |   [1,3] = [false] 
+   req1st = false, --  and 3rd on SMRSMR/BB/BEC           |   [1,3] = [false] 
 ----------------------------------------------------------|-------------------
 -- (semi-functional) Timer triggers at "Start Race",      |     [3] = [true]
    trigSR = false, -- instead of file select.             |   [1,2] = [false] 

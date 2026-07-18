@@ -1,62 +1,163 @@
 # Star Wars Racer Auto Splitter (for LibreSplit)
-An auto splitter script that automates LibreSplit's timer, for Star Wars Episode I Racer speedruns.  
+A script that automates LibreSplit's timer, for Star Wars Episode I Racer speedruns.  
 
 ### Features
-* Auto Start, Split, and Reset (based on settings)
-* In script settings including:  
-  - presets for run catagory  
-  - and/or advanced full settings control
+* Auto Start when file is opened, or (experimentally) when selecting "Start Race" for New Game +
+* Split at race finsh
+  * Option to require 1st place for 100%
+* Reset on return to file selection
+  * Option to disabled reset
+* Run catagory presets (optional)
+* Choose between IGT, LRT, RTA for timing methods 
+* Ability to remove unfocused / tabbed out time when using LRT
 * Option to view extra information in terminal (when LibreSplit is run through terminal)
 
 ### Requires
-* Installation of the re-released PC versions of Star Wars Episode I Racer (Steam, GOG, etc.).  
+* Installation of the re-released PC version of Star Wars Episode I Racer (Steam, GOG, etc.).  
     - Does not work with the original CD version.
 * [LibreSplit](https://github.com/LibreSplit/LibreSplit/tree/main)
 
 ## Quick Setup (TLDR)
-* Download the auto splitter (swe1r-autosplitter.lua).
-* Open the script and edit settings (under "AUTO SPLITTER SETTINGS") with a text editor
+* Download the script (swe1r-auto_splitter.lua).
+* Open the script with a text editor
+* under "AUTO SPLITTER SETTINGS" edit settings 
 * Load and Enable the script in LibreSplit
-* Open Star Wars Racer if not already open
-* Race!
 
-## Setup / Settings Breakdown
-### Script Navigation
-<!-- <img align="right" src="https://github.com/Wuzzmi/swe1r-autosplitter/blob/main/img/autosplitter-settings3.png"> -->
-Once you have downloaded the auto splitter, proceed to open it in your prefered text editor.  
-At the top, you will find:
-* Information about the auto splitter
-* Settings tips
-  
-Below these, labeled as "AUTO SPLITTER SETTING" are the script settings themselves. 
+## Configuring Settings
 
-### Settings Configuration
-By default the script is already set up for:
-* Any%
-* Amateur Circuit
-* Semi-Pro Circuit
-  
-If this is your chosen format you will likely not need to change anything.
-  
----
+### Getting Started
+After downloading the auto splitter, open it with a text editor.  
+Beneath the script information at the top, there will be some settings notes, and under that the  
+"AUTO SPLITTER SETTING" themselves. 
+
+### Auto Splitter Settings
+___
 > [!caution]
-> All settings are contained as variables in a lau   **```table { name = value, }```**.  
-> It is important that you:  
-> * Only edit the **```value```** of variables.
-> * Make sure that any **```value```** is ended with a comma. **```name = value,```**
+> ```lua
+> setting = "value",
+> ```
+> **When adjusting settings it is important that you:**
+> * Only edit the **```value```**.
+> * Only replace a **```value```** with another of its type. 
+> * Make sure that any **```value```** is ended with a comma **```,```**.
 >   
-> Changing any other syntax, like variable **```names```** etc. or missing any commas **```,```** probably will break the script.
----
-
-### Choose Run Format 
-**Default: ```preset = 1,```**  
-|Preset| None | Any%-Am/Semi Circuit | 100% | New Game + |
-|:----:|:----:|:--------------------:|:----:|:----------:|
-|**Value**|  0   |           1          |   2  |      3     |  
+> Changing or removing any other syntax (like **```setting```** names, missing any commas **```,```** etc.) will break the script.
+___
+```lua
+local sets = {
+--____________________________________________________________________________
+--------------------------- AUTOSPLITTER SETTINGS-----------------------------
+--____________________________________________________________________________
+-- Choose Run Catagory-->| None | Any%-Am/Semi Circuit | 100% |  NewGame+ |
+   preset = 1, --     -->| [0]  |         [1]          | [2]  |    [3]    |
+--_______________________|______|______________________|______|___________|___
+----------------------------------------------------------|  FORMAT = SETS
+-- Timing Method -   In race GT - RT No Loads - Real Time | [1,2,3] = [1](LRT)
+   timeMethod = 1, -- [0](IGT)  -   [1](LRT)  - [2+](RTA) |      
+----------------------------------------------------------|-------------------
+-- Requires 1st place, or if [false] requires 4th place,  |     [2] = [true]
+   req1st = false, --  and 3rd on SMR/BB/BEC.             |   [1,3] = [false] 
+----------------------------------------------------------|-------------------
+-- (semi-functional) Timer triggers at "Start Race",      |     [3] = [true]
+   trigSR = false, -- instead of file select.             |   [1,2] = [false] 
+-- Must move directly from "Track Select" > "Start Race"  |
+----------------------------------------------------------|-------------------
+-- Enable reset trigger - triggers at file selection.     |      
+   reset = true, -- [false] for mid-run file switch.      |     [3] = [false]
+----------------------------------------------------------\___________________
+-- Real-Time No Loads removes unfocused time (tabbed out)
+   noTab = false, -- Affects all presets [timeMethod = 1]
+------------------------------------------------------------------------------
+-- View Extra Info In Terminal (when LibreSplit is run through the terminal).
+   termInfo = { view = false, -- Toggles the view of the following extra info.
+--  --  --  --  --  --  --  --  --  --  --  --  --  --  --  --  --  --  --  --
+                 totalRIGT = true, -- Total race IGT
+                   curRIGT = false, -- Current race IGT
+                 overHeats = true, -- Counts overheats over whole run
+                    deaths = true, -- Counts deaths over whole run
+   }--________________________________________________________________________
+------------------------------------------------------------------------------
+}
+```
+In the script, each setting is detailed to a minimal degree. This should be enough to work with, but below each setting is described in more detail.
+___
+### Choose Run Catagory 
+```lua
+preset = 1,
+```
+|Catagory| None | Any%-Am/Semi Circuit | 100% | New Game + |
+|:---:|:---:|:---:|:---:|:---:|
+|**Value**| 0 | 1 | 2 | 3 |  
  
- Setting **```preset```** to **```1```,  ```2```, or ```3```** will override the values of a number of other settings. For this reason **```preset``` ```0```** exists, allowing for full settings control for special use cases (advanced users).
+**```preset```** is the most important setting. It functions as a parent setting for of a number of other settings. Setting **```preset```** to **```1```,  ```2```, or ```3```** will override these settings. For this reason **```preset``` ```0```** exists, allowing for full settings control for special use cases (advanced users).
 
- > [!tip]
-> The **```preset```** variable is the only setting that requires adjustment, in order to properly run all formats.
+ > [!note]
+> The **```preset```** variable is the only setting that requires adjustment, in order to properly run all catagories.
 
-WIP...
+___
+**Timing Method**
+```lua
+timeMethod = 1,
+```
+|Method| In race Game Time (IGT) | Real Time No loads (LRT) | Real Time (RTA) |
+|:---:|:---:|:---:|:---:|
+|**Value**| 0 | 1 | 2+ |
+| **```preset```** |  | **```1``` ```2``` ```3```** |  |
+ 
+Here you are given the option to choose your prefered Timing Method. As shown all 3 catagory presets override to **```timeMethod = 1,``` (LRT)**. The other 2 aren't useful for recording official runs, but maybe useful for other specific use cases.
+
+___
+**Requires 1st place**
+```lua
+req1st = false,
+```
+| Win Condition | 1st | 4th / 3rd (on SMR/BB/BEC) |
+|:---:|:---:|:---:|
+|**Value**| true | false |
+| **```preset```** | **```2```** | **```1``` ```3```** |
+
+**``````** 
+ 
+___
+**(semi-functional) Timer triggers at "Start Race"**
+```lua
+trigSR = false,
+```
+|  |  |  |
+|:---:|:---:|:---:|
+|**Value**| true | false |
+ 
+**``````** 
+
+___
+**Enable reset trigger**
+```lua
+reset = true,
+```
+|  |  |  |
+|:---:|:---:|:---:|
+|**Value**| true | false |
+ 
+**``````** 
+
+___
+**Real-Time No Loads removes unfocused time (tabbed out)**
+```lua
+noTab = false,
+```
+|  |  |  |
+|:---:|:---:|:---:|
+|**Value**| true | false |
+ 
+**``````** 
+
+___
+**View Extra Info In Terminal**
+```lua
+termInfo = { view = false,
+```
+|  |  |  |
+|:---:|:---:|:---:|
+|**Value**| true | false |
+ 
+**``````** 
