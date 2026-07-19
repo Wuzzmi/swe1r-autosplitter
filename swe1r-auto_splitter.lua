@@ -7,9 +7,9 @@
 The same autosplitter logic, converted to LUA, with some additions.
 
   Features include:
-  - Auto start on file open, or (semi-funcionaly) on "Race Start"
+  - Auto start on file open, or (semifuncionaly) on "Race Start"
   - Reset on file selection screen 
-  - Auto split on crossing finish line based on race placement
+  - Autosplit on crossing finish line based on race placement
       - option to toggle regular or 100% race win conditions
   - Dynamically update timer refresh rate to sync with in-game frametime
   - Option to choose between 3 timing methods:
@@ -26,11 +26,11 @@ The same autosplitter logic, converted to LUA, with some additions.
       - overheat count
       - death count
       LibreSplit must be run in terminal for this feature to work.
-  - "AUTO SPLITTER SETTINGS" at the top of this script.
+  - "AUTOSPLITTER SETTINGS" at the top of this script.
 
 ---------------------------- SETTINGS BASICS ---------------------------------
         To set your run format, just adjust the value of the [preset] setting
-    (the first setting under "AUTO SPLITTER SETTINGS") below. Setting a 
+    (the first setting under "AUTOSPLITTER SETTINGS") below. Setting a 
     [1, 2, or 3] whichever cooresponds with your run type(right of [preset]). 
     Making sure to keep the comma!!! 
 ---------------------------- ADVANCED SETTINGS -------------------------------
@@ -46,7 +46,7 @@ process("SWEP1RCR.EXE")
 
 local sets = {
 --____________________________________________________________________________
--------------------------- AUTO SPLITTER SETTINGS ----------------------------
+--------------------------- AUTOSPLITTER SETTINGS ----------------------------
 --____________________________________________________________________________
 -- CHOOSE RUN CATAGORY --> None | Any%-Am/Semi Circuit | 100% |  NewGame+ |
    preset = 1,         --> [0]  |         [1]          | [2]  |    [3]    |
@@ -58,24 +58,23 @@ local sets = {
 -- REQUIRES 1ST PLACE, or if [false] requires 4th place,  |     [2] = [true]
    req1st = false, --  and 3rd on SMRSMR/BB/BEC           |   [1,3] = [false] 
 ----------------------------------------------------------|-------------------
--- TIMER TRIGGERS AT "Start Race", instead of file select.|     [3] = [true]
-   trigSR = false, -- (semi-functional)                   |   [1,2] = [false] 
--- Must move directly from "Track Select" > "Start Race"  |
+-- "START RACE" TIMER TRIGGER (SEMIFUNCTIONAL) - Move     |
+   trigSR = false, -- from "Track Select" > "START RACE"  |   [1,2] = [false] 
 ----------------------------------------------------------|-------------------
 -- ENABLE RESET TRIGGER - triggers at file selection.     |      
    reset = true, -- [false] for mid-run file switch.      |     [3] = [false]
 ----------------------------------------------------------\___________________
--- REMOVE UNFOCUSED TIME (tabbed out) requires RT No Loads 
+-- REMOVE UNFOCUSED TIME (TABBED OUT) requires RT No Loads 
    noTab = false, -- Affects all presets [timeMethod = 1]
 ------------------------------------------------------------------------------
--- VIEW EXTRA INFO IN TERMINAL (when LibreSplit is run through the terminal).
-   termInfo = { view = false, -- Toggles the view of the following extra info.
+-- VIEW EXTRA STATS IN TERMINAL (when LibreSplit is run through the terminal).
+   viewTermStats = false, -- Toggles the view of the following extra info.
 --  --  --  --  --  --  --  --  --  --  --  --  --  --  --  --  --  --  --  --
-                 totalRIGT = true, -- Total race IGT
-                   curRIGT = false, -- Current race IGT
-                 overHeats = true, -- Counts overheats over whole run
-                    deaths = true, -- Counts deaths over whole run
-   }--________________________________________________________________________
+                viewIGT = true, -- Total race IGT
+         viewCurRaceIGT = false, -- Current race IGT
+          viewOverheats = true, -- Counts overheats over whole run
+             viewDeaths = true, -- Counts viewDeaths over whole run
+--____________________________________________________________________________
 ------------------------------------------------------------------------------
 }
 -- preset overrides 
@@ -119,7 +118,7 @@ local vars = {
     loading = 0
 }
 
-if sets.termInfo.view then
+if sets.viewTermStats then
     -- Terminal info variables
     vars.infoTRIGT = "0.00"
     vars.infoRIGT = "0.00"
@@ -128,7 +127,7 @@ if sets.termInfo.view then
     vars.cntOverHeat = 0
     vars.cntDeath = 0
 end
--- Used to print the title and value of a member of [termInfo] if enabled
+-- Used to print the title and value of a member of [viewTermStats] if enabled
 local function termDisplay(title, value, condition)
     if condition then
         print("____________________________\n      " ..
@@ -190,22 +189,22 @@ end
 
 function update()
     -- View terminal info
-    if sets.termInfo.view then
+    if sets.viewTermStats then
         print("\n")
-            termDisplay("Total Race IGT", vars.infoTRIGT,
-            sets.termInfo.totalRIGT) 
+            termDisplay("IGT", vars.infoTRIGT,
+            sets.viewIGT) 
             termDisplay("Current Race IGT", vars.infoRIGT,
-            sets.termInfo.curRIGT) 
+            sets.viewCurRaceIGT) 
             termDisplay("Overheat Counter", vars.infoOHC,
-            sets.termInfo.overHeats) 
+            sets.viewOverHeats) 
             termDisplay("Death Counter", vars.infoDC,
-            sets.termInfo.deaths) 
+            sets.viewDeaths) 
         print("\n")
     end
     -- Dynamically update refresh rate based on frame time
     refreshRate = current.frmLen > 0 and math.floor(1 / current.frmLen) or 24
     -- calculate and set "death counter & overheat counter" if needed
-    if sets.termInfo.view then
+    if sets.viewTermStats then
         if b_and(current.podFlags2, b_lshift(1, 6)) ~= 0 and 
         b_and(old.podFlags2, b_lshift(1, 6)) == 0 then
             vars.cntDeath = vars.cntDeath + 1 
@@ -218,25 +217,25 @@ function update()
             vars.infoOHC = (vars.cntOverHeat > 0) and 
                 vars.cntOverHeat or "0" 
     end
-    if sets.timeMethod == 0 or sets.termInfo.view then
+    if sets.timeMethod == 0 or sets.viewTermStats then
         -- When entering race
         if current.inRace == 1 and old.inRace == 0 then
             vars.inRace = 1
-            vars.infoRIGT = sets.termInfo.view and 
+            vars.infoRIGT = sets.viewTermStats and 
                 "0.00" or vars.infoRIGT 
         end
         -- Format current race in-game time
         vars.gtAdd = (vars.inRace == 1 and 
         b_and(current.podFlags8, b_lshift(1, 1)) == 0) and 
             current.raceTime or 0
-            vars.infoRIGT = (sets.termInfo.view and 
+            vars.infoRIGT = (sets.viewTermStats and 
             (vars.gtAdd > 0)) and 
                 formatTime(vars.gtAdd) or vars.infoRIGT
         -- Handle race completion
         if ((b_and(current.podFlags8, b_lshift(1, 1)) ~= 0 and 
         b_and(old.podFlags8, b_lshift(1, 1)) == 0) or
         (current.inRace == 0 and old.inRace == 1 and vars.inRace ~= 0)) then
-                vars.infoRIGT = sets.termInfo.view and 
+                vars.infoRIGT = sets.viewTermStats and 
                     formatTime(current.raceTime) or vars.infoRIGT
             vars.gt = vars.gt + current.raceTime
             vars.gtAdd = 0
@@ -304,7 +303,7 @@ end
 
 function start()
     -- Reset all counters and variables
-    if sets.termInfo.view then 
+    if sets.viewTermStats then 
         vars.infoRIGT = "0.00"
         vars.infoTRIGT = "0.00"
         vars.infoOHC = "0"
