@@ -17,21 +17,18 @@ The same autosplitter logic, converted to LUA, with some additions/compatability
 * Installation of the re-released PC version of Star Wars Episode I Racer (Steam, GOG, etc.)  
     - does not work with the original CD version
 
-## QUICK SETUP (TLDR)
-* Download and open the script in a text editor
-* Edit the settings, under "AUTOSPLITTER SETTINGS"
+## TLDR (for Advanced Users)
+* Edit the **in script** settings, under **"AUTOSPLITTER SETTINGS"**
 * Load and Enable the script in LibreSplit
+* Run Star Wars Racer
 ___
-___
-## FULL SETUP
+## SETUP
 * Download the script
 * Open the script in a text editor
    
 At the top there are script notes, followed by a small settings guide, and under that will be the "AUTOSPLITTER SETTING". 
 
 ### AUTOSPLITTER SETTINGS
-Here is where all settings can be modified. The script settings include commenting that minimally describes each option. This should be enough to work with, however each setting is described in greater detail below.  
-  
 > [!caution]
 > ```lua
 > setting = "value",
@@ -42,7 +39,6 @@ Here is where all settings can be modified. The script settings include commenti
 > * Make sure that any **```value```** is ended with a comma **```,```**.
 >   
 > Changing or removing any other syntax (like **```setting```** names, missing any commas **```,```** etc.) will break the script.
-___
 ```lua
 local sets = {
 --____________________________________________________________________________
@@ -78,9 +74,25 @@ local sets = {
 ------------------------------------------------------------------------------
 }
 ```
+Here is where all settings can be modified. The script settings include minimal description of each option, this should be enough to work with. If you feel comfotable go ahead and adjust the settings to your liking.
+  
+> [!note]
+> The **```preset```** variable is the only setting that requires adjustment to properly running every catagory.
+
+If you would like more information before proceeding, each setting is described in greater detail after the **ENABLING THE SCRIPT** section.
+  
+## ENABLING THE SCRIPT
+Open LibreSplit, right click in the window and select "Open Auto Splitter", now Select the script and "Open" it. Ensure that "Enable Auto Splitter" is checked.  
+  
+![Load and Enable Autosplitter in LibreSplit](https://github.com/Wuzzmi/swe1r-auto_splitter/blob/main/img/libresplit-load-enable.png)  
+  
+> [!important]
+> If you have edited your script settings after it was already loaded and enabled, you will need to uncheck and recheck "Enable Auto Splitter" for the changes to take effect.
+  
+**Now everything is all set and the autosplitter will function when you run the game!**
 ___
-___
-### CATAGORY PRESET 
+## FULL SETTINGS BREAKDOWN
+**CATAGORY PRESET** 
 ```lua
 preset = 1,
 ```
@@ -88,9 +100,6 @@ preset = 1,
 |  | None | Any% - Amateur/Semi-Pro Circuit | 100% | New Game + |
 |:---:|:---:|:---:|:---:|:---:|
 | **preset =** | 0 | 1 | 2 | 3 |  
- > [!note]
-> The **```preset```** variable is the only setting that requires adjustment to properly running every catagory.
-___
 ___
 **TIMING METHOD**
 ```lua
@@ -123,7 +132,7 @@ trigSR = false,
 |:---:|:---:|:---:|
 |**trigSR =**| true | false |
 | **```preset```** | **```3```** | **```1``` ```2```** |
- > [!important]
+> [!important]
 > Currently the "Start Race" trigger is semifunctional. In order for the timer to trigger, you must enter the track selection scene, then move directly to select "Start Race". If you deviate, just return to the track selection scene before heading to "Start Race". 
 
 ___
@@ -191,8 +200,5 @@ viewDeaths = true,
 **```viewDeaths```** shows how man times you have died during your run.
 ___
 
-## LOADING/RUNNING THE SCRIPT
-To load the script, open LibreSplit normally, or through terminal if **```viewTermStats = true```**. Right click in the window and select "Open Auto Splitter" select the script and "Open" it. Ensure that "Enable Auto Splitter" is checked. 
-![Load and Enable Autosplitter in LibreSplit](https://github.com/Wuzzmi/swe1r-auto_splitter/blob/main/img/libresplit-load-enable.png)
-If you have edited your script settings after it was already loaded and enabled, you will need to uncheck and recheck "Enable Auto Splitter" for the changes to take effect. Now everything is all set and the autosplitter will function when you run the game!
-
+## License
+This repo is unlicensed.
