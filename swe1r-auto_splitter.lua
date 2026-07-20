@@ -68,10 +68,10 @@ local sets = {
    noTab = false, -- Affects all presets [timeMethod = 1]
 ------------------------------------------------------------------------------
 -- VIEW EXTRA STATS IN TERMINAL (when LibreSplit is run through the terminal).
-   viewTermStats = false, -- Toggles the view of the following extra info.
+   viewTermStats = true, -- Toggles the view of the following extra info.
 --  --  --  --  --  --  --  --  --  --  --  --  --  --  --  --  --  --  --  --
                 viewIGT = true, -- Total race IGT
-         viewCurRaceIGT = false, -- Current race IGT
+         viewCurRaceIGT = true, -- Current race IGT
           viewOverheats = true, -- Counts overheats over whole run
              viewDeaths = true, -- Counts viewDeaths over whole run
 --____________________________________________________________________________
@@ -196,7 +196,7 @@ function update()
             termDisplay("Current Race IGT", vars.infoRIGT,
             sets.viewCurRaceIGT) 
             termDisplay("Overheat Counter", vars.infoOHC,
-            sets.viewOverHeats) 
+            sets.viewOverheats) 
             termDisplay("Death Counter", vars.infoDC,
             sets.viewDeaths) 
         print("\n")
