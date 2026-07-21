@@ -37,15 +37,15 @@ local sets = {
 --____________________________________________________________________________
 --------------------------- AUTOSPLITTER SETTINGS ----------------------------
 --____________________________________________________________________________
--- CHOOSE RUN CATEGORY --> None |   Any%/Amateur/Semi  | 100% | New Game+ |
-   preset = 1,         --> [0]  |         [1]          | [2]  |    [3]    |
---______________________________|______________________|______|___________|___
+-- CHOOSE RUN CATEGORY --> None | Any%/Amateur/Semi | 100% | New Game+ |
+   preset = 1,         --> [0]  |        [1]        | [2]  |    [3]    |
+--______________________________|___________________|______|___________|______
 ----------------------------------------------------------|  PRESET = SETS
 -- TIMING METHOD  -->In race GT | RT No Loads | Real Time | [1,2,3] = [1](LRT)
    timeMethod = 1,--> [0](IGT)  |   [1](LRT)  | [2+](RTA) |      
 ----------------------------------------------------------|-------------------
 -- REQUIRES 1ST PLACE, or if [false] requires 4th place,  |     [2] = [true]
-   req1st = false, --  and 3rd on SMR/BB/BEC           |   [1,3] = [false] 
+   req1st = false, --  and 3rd on SMR/BB/BEC              |   [1,3] = [false] 
 ----------------------------------------------------------|-------------------
 -- "START RACE" TIMER TRIGGER (SEMIFUNCTIONAL) - Move     |
    trigSR = false, -- from "Track Select" > "START RACE"  |   [1,2] = [false] 
@@ -53,11 +53,11 @@ local sets = {
 -- ENABLE RESET TRIGGER - triggers at file selection.     |      
    reset = true, -- [false] for mid-run file switch.      |     [3] = [false]
 ----------------------------------------------------------\___________________
--- REMOVE UNFOCUSED TIME (TABBED-OUT) requires RT No Loads 
+-- REMOVE UNFOCUSED TIME (TABBED OUT) requires RT No Loads 
    noTab = false, -- Affects all presets [timeMethod = 1]
 ------------------------------------------------------------------------------
--- VIEW EXTRA INFO IN TERMINAL (when LibreSplit is run through the terminal).
-   viewTermStats = false, -- Toggles the view of the following extra info.
+-- VIEW EXTRA STATS IN TERMINAL (when LibreSplit is run through the terminal).
+   viewTermStats = true, -- Toggles the view of the following extra info.
 --  --  --  --  --  --  --  --  --  --  --  --  --  --  --  --  --  --  --  --
                 viewIGT = true, -- Total race IGT
          viewCurRaceIGT = false, -- Current race IGT

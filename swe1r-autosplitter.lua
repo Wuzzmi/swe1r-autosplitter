@@ -48,15 +48,15 @@ local sets = {
 --____________________________________________________________________________
 --------------------------- AUTOSPLITTER SETTINGS ----------------------------
 --____________________________________________________________________________
--- CHOOSE RUN CATAGORY --> None | Any%-Am/Semi Circuit | 100% |  NewGame+ |
-   preset = 1,         --> [0]  |         [1]          | [2]  |    [3]    |
---______________________________|______________________|______|___________|___
+-- CHOOSE RUN CATEGORY --> None | Any%/Amateur/Semi | 100% | New Game+ |
+   preset = 1,         --> [0]  |        [1]        | [2]  |    [3]    |
+--______________________________|___________________|______|___________|______
 ----------------------------------------------------------|  PRESET = SETS
 -- TIMING METHOD  -->In race GT | RT No Loads | Real Time | [1,2,3] = [1](LRT)
    timeMethod = 1,--> [0](IGT)  |   [1](LRT)  | [2+](RTA) |      
 ----------------------------------------------------------|-------------------
 -- REQUIRES 1ST PLACE, or if [false] requires 4th place,  |     [2] = [true]
-   req1st = false, --  and 3rd on SMRSMR/BB/BEC           |   [1,3] = [false] 
+   req1st = false, --  and 3rd on SMR/BB/BEC              |   [1,3] = [false] 
 ----------------------------------------------------------|-------------------
 -- "START RACE" TIMER TRIGGER (SEMIFUNCTIONAL) - Move     |
    trigSR = false, -- from "Track Select" > "START RACE"  |   [1,2] = [false] 
