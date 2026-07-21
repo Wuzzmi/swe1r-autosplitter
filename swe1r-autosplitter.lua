@@ -29,7 +29,7 @@ The same autosplitter logic, converted to LUA, with some additions.
   - "AUTOSPLITTER SETTINGS" at the top of this script.
 
 ---------------------------- SETTINGS BASICS ---------------------------------
-        To set your run format, just adjust the value of the [preset] setting
+        To set your run format, adjust the value of the [preset] setting
     (the first setting under "AUTOSPLITTER SETTINGS") below. Setting a 
     [1, 2, or 3] whichever cooresponds with your run type(right of [preset]). 
     Making sure to keep the comma!!! 
@@ -71,7 +71,7 @@ local sets = {
    viewTermStats = true, -- Toggles the view of the following extra info.
 --  --  --  --  --  --  --  --  --  --  --  --  --  --  --  --  --  --  --  --
                 viewIGT = true, -- Total race IGT
-         viewCurRaceIGT = true, -- Current race IGT
+         viewCurRaceIGT = false, -- Current race IGT
           viewOverheats = true, -- Counts overheats over whole run
              viewDeaths = true, -- Counts viewDeaths over whole run
 --____________________________________________________________________________
