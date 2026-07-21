@@ -3,13 +3,16 @@
 Based on [Galeforce's LiveSplit Autosplitter](https://github.com/everalert/swe1r-autosplitter) v0.5.1  
 The same autosplitter logic, converted to Lua, with some additions/compatibility changes.
 
+> [!note]
+> Unlike [LiveSplit](https://github.com/LiveSplit/LiveSplit), currently [LibreSplit](https://github.com/LibreSplit/LibreSplit/tree/main) has no support for managing autosplitter settings. As well as viewing extra stats, like LiveSplit does through it's "[ASL variable viewer](https://github.com/hawkerm/LiveSplit.ASLVarViewer)" plugin. As a solution for these differences, this script utilizes in script settings, as well as the option to view the extra stats via terminal.
+  
 ### FEATURES
-* Choice to auto Start when file is opened, or "Start Race" is selected 
+* Auto start when file is opened, or optionally when "Start Race" is selected 
 * Auto split at race finish, with toggle for 1st place requirement
-* Option for auto reset, on return to file selection
-* Option to use run category presets
+* Optional auto reset, on return to file selection
+* Optional run category presets
 * Choose between IGT, LRT and RTA timing methods 
-* Ability to remove unfocused/tabbed-out time when using LRT
+* Option to remove unfocused/tabbed-out time
 * Option to view extra stats in terminal
 
 ### REQUIRES
@@ -17,7 +20,7 @@ The same autosplitter logic, converted to Lua, with some additions/compatibility
 * Installation of the re-released PC version of Star Wars Episode I Racer (Steam, GOG, etc.)  
     - does not work with the original CD version
 
-## TLDR (for Advanced Users)
+## TLDR (Advanced Users)
 * Edit the **in script** settings, under **"AUTOSPLITTER SETTINGS"**
 * Load and Enable the script in LibreSplit
 * Run Star Wars Racer
@@ -34,7 +37,7 @@ local sets = {
 --____________________________________________________________________________
 --------------------------- AUTOSPLITTER SETTINGS ----------------------------
 --____________________________________________________________________________
--- CHOOSE RUN category --> None |   Any%/Amateur/Semi  | 100% | New Game+ |
+-- CHOOSE RUN CATEGORY --> None |   Any%/Amateur/Semi  | 100% | New Game+ |
    preset = 1,         --> [0]  |         [1]          | [2]  |    [3]    |
 --______________________________|______________________|______|___________|___
 ----------------------------------------------------------|  PRESET = SETS
@@ -64,15 +67,8 @@ local sets = {
 ------------------------------------------------------------------------------
 }
 ```
-<<<<<<< HEAD
-Here is where all settings can be modified. The script settings include minimal description of each option, this should be enough to work with. If you feel comfortable go ahead and adjust the settings to your liking.
+Here is where all settings can be modified. The script settings include a minimal description of each option, this should be enough to work with. For most cases the **```preset```** setting is the only setting that will need to be adjusted.  
   
-> [!note]
-> The **```preset```** variable is the only setting that requires adjustment to properly running every category.
-
-If you would like more information before proceeding, each setting is described in greater detail after the **ENABLING THE SCRIPT** section.
-=======
-Here is where all settings can be modified. The script settings include minimal description of each option, this should be enough to work with. For most cases the **```preset```** setting is the only setting that will need to be adjusted. If you feel comfotable go ahead and adjust the settings to your liking. If you would like more information, each setting is described in greater detail after the **ENABLING THE SCRIPT** section.
 > [!caution]
 > ```lua
 > setting = "value",
@@ -83,10 +79,13 @@ Here is where all settings can be modified. The script settings include minimal 
 > * Make sure that any **```value```** is ended with a comma **```,```**.
 >   
 > Changing or removing any other syntax (like **```setting```** names, missing any commas **```,```** etc.) will break the script.
->>>>>>> refs/remotes/origin/main
   
-## ENABLING THE SCRIPT
-Open LibreSplit, right click in the window and select "Open Auto Splitter". Continue to select the script and "Open" it. Ensure that "Enable Auto Splitter" is checked.  
+If you feel comfotable go ahead and adjust the settings to your liking. If you would like more information, each setting is described in greater detail after the **ENABLE SCRIPT** section.  
+  
+
+   
+## ENABLE SCRIPT
+Open LibreSplit, right click in the window and select "Open Auto Splitter". Now select the script and "Open" it. Ensure that "Enable Auto Splitter" is checked.  
   
 ![Load and Enable Autosplitter in LibreSplit](https://github.com/Wuzzmi/swe1r-auto_splitter/blob/main/img/libresplit-load-enable.png)  
   
@@ -97,12 +96,12 @@ Open LibreSplit, right click in the window and select "Open Auto Splitter". Cont
 ___  
   
 ## FULL SETTINGS BREAKDOWN
-**category PRESET** 
+**CATEGORY PRESET** 
 ```lua
 preset = 1,
 ```
 **```preset```** is a one setting adjustment for switching run categories. It functions as a override for a number of other settings. For this reason **```preset``` ```0```** exists, allowing full settings control for special use cases.
-|  | None | Any% - Amateur/Semi-Pro Circuit | 100% | New Game + |
+|  | None | Any% / Amateur / Semi-Pro | 100% | New Game + |
 |:---:|:---:|:---:|:---:|:---:|
 | **preset =** | 0 | 1 | 2 | 3 |  
 ___
@@ -121,7 +120,7 @@ ___
 ```lua
 req1st = false,
 ```
-**```req1st```** toggles the 1st place win condition requirement to trigger a split. The normal win condition requires 4th place, or 3rd on the last track of a circuit ( SMR/BB/BEC ) to split. **```req1st```** is usually set **```true```** for 100% runs, not of much use otherwise.
+**```req1st```** sets a requirement to finish in 1st place, in order to trigger a split. The normal win condition requires 4th place, or 3rd on the last track of a circuit ( SMR/BB/BEC ). **```req1st```** is mostly used for 100% runs, it is not of much use otherwise.
 |  | Require 1st | Require 4th, 3rd (on SMR/BB/BEC) |
 |:---:|:---:|:---:|
 |**req1st =**| true | false |
@@ -132,7 +131,7 @@ ___
 ```lua
 trigSR = false,
 ```
-**```trigSR```** will trigger auto start when "Start Race" is selected. Otherwise auto start continue to start at file open. **```trigSR```** is used for the New Game + category, which requires timing to start when selecting "Start Race" for the first track. Otherwise it's uses are limited.
+**```trigSR```** will trigger auto start when "Start Race" is selected. Otherwise auto start will trigger at file open. **```trigSR```** is used for the New Game + category, which requires timing to start when selecting "Start Race" for the first track. Otherwise it's uses are limited.
 |  | "Start Race" trigger | File open trigger |
 |:---:|:---:|:---:|
 |**trigSR =**| true | false |
@@ -152,7 +151,7 @@ reset = true,
 | **```preset```** |  | **```3```** |
  
 ___
-**REMOVE UNFOCUSED TIME (TABBED-OUT)**
+**REMOVE UNFOCUSED TIME (Tabbed-Out)**
 ```lua
 noTab = false,
 ```
