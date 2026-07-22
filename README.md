@@ -4,7 +4,7 @@ Based on [Galeforce's LiveSplit Autosplitter](https://github.com/everalert/swe1r
 The same autosplitter logic, converted to Lua, with some additions/compatibility changes.
 
 > [!note]
-> Unlike [LiveSplit](https://github.com/LiveSplit/LiveSplit), currently [LibreSplit](https://github.com/LibreSplit/LibreSplit/tree/main) has no support for managing autosplitter settings. As well as viewing extra stats, like LiveSplit does through it's "[ASL variable viewer](https://github.com/hawkerm/LiveSplit.ASLVarViewer)" plugin. As a solution for these differences, this script utilizes in script settings, as well as the option to view the extra stats via terminal.
+> Unlike [LiveSplit](https://github.com/LiveSplit/LiveSplit), [LibreSplit](https://github.com/LibreSplit/LibreSplit/tree/main) currently has no support for managing autosplitter settings. As well as viewing extra stats, like LiveSplit does through it's "[ASL variable viewer](https://github.com/hawkerm/LiveSplit.ASLVarViewer)" plugin. As a solution for these differences, this script utilizes in script settings, as well as the option to view the extra stats via terminal.
   
 ### FEATURES
 * Auto start when file is opened, or optionally when "Start Race" is selected 
@@ -110,11 +110,14 @@ ___
 timeMethod = 1,
 ```
 Use **```timeMethod```** to choose either IGT, LRT or RTA. As shown in the table below, every category **```preset```** overrides to LRT (**```timeMethod = 1,```**). The other timing methods are not useful for recording official runs, but are there if you find a use for them.
+
 |  | In race Game Time (IGT) | Real Time No loads (LRT) | Real Time (RTA) |
 |:---:|:---:|:---:|:---:|
 |**timeMethod =**| 0 | 1 | 2+ |
 | **```preset```** |  | **```1``` ```2``` ```3```** |  |
- 
+
+ > [!note]
+> RTA will be used to if **```timeMethod```** is set to any number other than **```0```** or **```1```**, not just **```2```**.
 ___
 **REQUIRE 1ST PLACE**
 ```lua
@@ -144,7 +147,7 @@ ___
 ```lua
 reset = true,
 ```
-**```reset```** toggles auto reset on/off. It is very important to set **```reset = false```** for NG+ runs that require a file/mode change mid run. This will stop file/mode changes from resetting and ruining the run, which is why the NG+ **```preset```** overrides to **```reset = false```**. If your NG+ run doesn't need a file/mode change, and you would like to use **```reset```**, you will have to set **```preset = 0```** and manually set all settings. Aside from NG+ runs, **```reset```** is just personal preference.
+**```reset```** toggles auto reset on/off. It is very important to set **```reset = false```** for NG+ runs that require a file/mode change mid run. This stops file/mode changes from resetting and ruining the run, which is why the NG+ **```preset```** overrides to **```reset = false```**. If your NG+ run doesn't need a file/mode change, and you would like to use **```reset```**, you will have to set **```preset = 0```** and manually set all settings. Aside from NG+ runs, **```reset```** is just personal preference.
 |  | Auto Reset On | Auto Reset Off |
 |:---:|:---:|:---:|
 |**reset =**| true | false |
@@ -165,7 +168,7 @@ ___
 ```lua
 viewTermStats = false,
 ```
-**```viewTermStats```** toggles your enabled stats to be viewable in the terminal. **```viewTermStats```** has no effect unless you are running LibreSplit through the terminal, so keep **```false```** if not. This is not ideal, but is currently the best option. "[LiveSplit's ASL variable viewer](https://github.com/hawkerm/LiveSplit.ASLVarViewer)" allows these stats to be viewed in [LiveSplit](https://github.com/LiveSplit/LiveSplit) (there is no LibreSplit alternative).   
+**```viewTermStats```** toggles your enabled stats to be viewable in the terminal. **```viewTermStats```** has no effect unless you are running LibreSplit through the terminal, so keep **```false```** if not. This is not ideal, but is currently the best option. LiveSplit's "[ASL variable viewer](https://github.com/hawkerm/LiveSplit.ASLVarViewer)" plugin allows these stats to be viewed in [LiveSplit](https://github.com/LiveSplit/LiveSplit) (there is no LibreSplit alternative).   
   
 Each stat is set the same way as **```viewTermStats```**.  
 Like in this table:
