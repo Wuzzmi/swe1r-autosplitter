@@ -1,45 +1,35 @@
 --[[
-  Star Wars Episode I Racer (Linux-PC) Autosplitter by Wuzzmi
-
-  works with(GOG, Steam, etc.) versions, for use with LibreSplit.
-    -Based on Galeforce's LiveSplit Autosplitter v0.5.1
+  Star Wars Episode I Racer Autosplitter (for LibreSplit) by Wuzzmi
+  https://github.com/Wuzzmi/swe1r-autosplitter
+   * Based on Galeforce's LiveSplit Autosplitter v0.5.1
      https://github.com/everalert/swe1r-autosplitter
-The same autosplitter logic, converted to LUA, with some additions.
 
-  Features include:
-  - Auto start on file open, or (semifuncionaly) on "Race Start"
-  - Reset on file selection screen 
-  - Autosplit on crossing finish line based on race placement
-      - option to toggle regular or 100% race win conditions
-  - Dynamically update timer refresh rate to sync with in-game frametime
-  - Option to choose between 3 timing methods:
-      - In Game Time(IGT) - only time in spent in race
-      - Load Removed Time(LRT) - real-time without loads
-      - Real Time Attack(RTA) - normal time no alterations
-  - Presets for run format -  option to choose between 3 run formats:
-      - Any% or, Amateur/Semi-Pro Circuit
-      - 100%
-      - All Tracks New Game Plus
-  - View extra info in terminal (replaces LiveSplit's ASL Var Viewer)
-      - current race in-game time
-      - total race in-game time
-      - overheat count
-      - death count
-      LibreSplit must be run in terminal for this feature to work.
-  - "AUTOSPLITTER SETTINGS" at the top of this script.
+  FEATURES
+   * Auto start when file is opened, or optionally when "Start Race" is selected
+   * Auto split at race finish, with toggle for 1st place requirement
+   * Optional auto reset, on return to file selection
+   * Optional run category presets
+   * Choose between IGT, LRT and RTA timing methods
+   * Option to remove unfocused/tabbed-out time
+   * Option to view extra stats in terminal
+  
+   USING THIS SCRIPT
+   * Adjust the in script settings (below) 
+   * Right click in LibreSplit, select "Open Auto Splitter", choose the script 
+   * Check "Enable Auto Splitter"
+   * Run the Star Wars Racer
 
 ---------------------------- SETTINGS BASICS ---------------------------------
-        To set your run format, adjust the value of the [preset] setting
+        To set your run category, adjust the value of the [preset] setting
     (the first setting under "AUTOSPLITTER SETTINGS") below. Setting a 
-    [1, 2, or 3] whichever cooresponds with your run type(right of [preset]). 
+    [1, 2, or 3] whichever cooresponds with your run category(right of [preset]). 
     Making sure to keep the comma!!! 
 ---------------------------- ADVANCED SETTINGS -------------------------------
-         Adjusted any setting to preference, just note that format presets 
+         Adjusted any settings to preference, just note that category presets 
     [1, 2, 3] override a number of the other settings. Each preset's override 
     values, are displayed in the box on the right side of settings. If your 
-    preset overrides a prefered setting, set [preset = 0,](not recommended), 
-    and ensure all other settings are set correctly. (Check you comma's, 
-    missing one will break the script.)
+    preset overrides a prefered setting, set [preset = 0,] and ensure all other 
+    settings are set correctly. 
 --]]
 
 process("SWEP1RCR.EXE")
