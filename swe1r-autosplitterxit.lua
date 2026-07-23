@@ -58,10 +58,10 @@ local sets = {
    noTab = false, -- Affects all presets [timeMethod = 1]
 ------------------------------------------------------------------------------
 -- VIEW EXTRA STATS IN TERMINAL (when LibreSplit is run through the terminal).
-   viewTermStats = true, -- Toggles the view of the following extra info.
+   viewTermStats = false, -- Toggles the view of the following extra info.
 --  --  -VIEWABLE STATS  --  --  --  --  --  --  --  --  --  --  --  --  --  -
                 viewIGT = true, -- Total race IGT
-         viewCurRaceIGT = true, -- Current race IGT
+         viewCurRaceIGT = false, -- Current race IGT
           viewOverheats = true, -- Counts overheats over whole run
              viewDeaths = true, -- Counts viewDeaths over whole run
 --____________________________________________________________________________
