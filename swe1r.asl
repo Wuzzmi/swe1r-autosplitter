@@ -30,7 +30,7 @@
 	- cd version support?
 */
 
-state("SWEP1RCR.EXE")
+state("SWEP1RCR")
 {
 	float raceTime : 0xD78A4, 0x74;
 	byte racePos : 0xD78A4, 0x5C;
