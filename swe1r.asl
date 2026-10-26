@@ -30,7 +30,7 @@
 	- cd version support?
 */
 
-state("SWEP1RCR")
+state("SWEP1RCR.EXE")
 {
 	float raceTime : 0xD78A4, 0x74;
 	byte racePos : 0xD78A4, 0x5C;
@@ -42,6 +42,7 @@ state("SWEP1RCR")
 	byte selTrk : 0xBFDB8, 0x5D;
 	//byte selCct : 0xBFDB8, 0x5E;
 	//byte selPod : 0xBFDB8, 0x73;
+    byte levelEngaged: 0xEB448, 0x238;
 	byte inRace : 0xA9BB81;
 	//byte inTournament : 0x10C450; //1=tourney,0=freeplay
 	int frmCnt: 0xA22A30;
@@ -50,6 +51,7 @@ state("SWEP1RCR")
 	//byte hwndFoc : 0xB9544, 0x16C340; // (0x020000->0x18C340) not thoroughly tested, possibility that goal address is not only written on focus change, and that ad hoc fake pointer path is not static
 	byte gameTabbedOut : 0x10CB64; // actual ingame variable for tabbing out
 	string17 menTxt1 : 0xA2C380;
+
 }
 
 startup
@@ -57,6 +59,8 @@ startup
 	settings.Add("ASset",true,"Autosplitter Settings");
 	  settings.Add("useReqWin",false,"Require 1st Place","ASset");
 	  settings.SetToolTip("useReqWin","e.g. for 100%; turning off will require 3rd for SMR/BB/BEC and otherwise 4th.");
+	  settings.Add("startRaceTrig",false,"Selecting \"Start race\" starts timer","ASset");
+	  settings.SetToolTip("startRaceTrig","Timer will start when selecting Start Race instead of file select.");
 	  settings.Add("useRTNL",true,"Game Time Removes Loads","ASset");
 	  settings.SetToolTip("useRTNL","Display Real-Time without loads as LiveSplit 'Game Time' instead of in-game race times.");
 	    settings.Add("useTabRTNL",false,"Game Time Removes Unfocused Time","useRTNL");
@@ -230,6 +234,9 @@ start
 	vars.inRace = 0;
 	vars.loadBuffer = 0;
 	vars.loadBufferSize = 0;
-
+    // starts timer at "Start Race" when setting is enabled
+    if (settings["startRaceTrig"]) {
+        return current.levelEngaged == 1 && old.levelEngaged == 0;
+    }
 	return (current.sceneId == 60 && current.menTxt1 != "~F6Current Player" && current.menTxt1 != "~F6~sSingle Playe");
 }
