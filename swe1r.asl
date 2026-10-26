@@ -51,7 +51,6 @@ state("SWEP1RCR")
 	//byte hwndFoc : 0xB9544, 0x16C340; // (0x020000->0x18C340) not thoroughly tested, possibility that goal address is not only written on focus change, and that ad hoc fake pointer path is not static
 	byte gameTabbedOut : 0x10CB64; // actual ingame variable for tabbing out
 	string17 menTxt1 : 0xA2C380;
-
 }
 
 startup
@@ -234,6 +233,7 @@ start
 	vars.inRace = 0;
 	vars.loadBuffer = 0;
 	vars.loadBufferSize = 0;
+
     // starts timer at "Start Race" when setting is enabled
     if (settings["startRaceTrig"]) {
         return current.levelEngaged == 1 && old.levelEngaged == 0;
