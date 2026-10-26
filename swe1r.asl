@@ -58,8 +58,8 @@ startup
 	settings.Add("ASset",true,"Autosplitter Settings");
 	  settings.Add("useReqWin",false,"Require 1st Place","ASset");
 	  settings.SetToolTip("useReqWin","e.g. for 100%; turning off will require 3rd for SMR/BB/BEC and otherwise 4th.");
-	  settings.Add("startRaceTrig",false,"Selecting \"Start Race\" starts timer","ASset");
-	  settings.SetToolTip("startRaceTrig","Timer will start when selecting Start Race instead of file select.");
+	  settings.Add("startRaceTrig",false,"Start timer at 'Start Race' select","ASset");
+	  settings.SetToolTip("startRaceTrig","Timer will start when selecting Start Race instead of at file select.");
 	  settings.Add("useRTNL",true,"Game Time Removes Loads","ASset");
 	  settings.SetToolTip("useRTNL","Display Real-Time without loads as LiveSplit 'Game Time' instead of in-game race times.");
 	    settings.Add("useTabRTNL",false,"Game Time Removes Unfocused Time","useRTNL");
